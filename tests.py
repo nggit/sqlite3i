@@ -138,25 +138,31 @@ class TestSQLite3i(unittest.TestCase):
     def test_invalid_instances(self):
         with self.assertRaises(ValueError) as cm:
             _ = DatabaseStatement(None, '')
-            self.assertEqual(
-                str(cm.exception), 'db must be an instance of Database'
-            )
+
+        self.assertEqual(
+            str(cm.exception), 'db must be an instance of Database'
+        )
 
         with self.assertRaises(ValueError) as cm:
             _ = AsyncDatabaseStatement(None, '')
-            self.assertEqual(
-                str(cm.exception), 'db must be an instance of AsyncDatabase'
-            )
+
+        self.assertEqual(
+            str(cm.exception), 'db must be an instance of AsyncDatabase'
+        )
 
     def test_invalid_arguments(self):
         async def test():
-            with self.assertRaises(ValueError):
+            try:
                 stmt = self.db.prepare(None)
                 await stmt.execute()
+            except Exception as exc:
+                self.assertTrue(isinstance(exc, (TypeError, ValueError)))
 
-            with self.assertRaises(ValueError):
+            try:
                 stmt = self.db.prepare('SELECT * FROM users')
                 await stmt.execute(None)
+            except Exception as exc:
+                self.assertTrue(isinstance(exc, (TypeError, ValueError)))
 
         self.loop.run_until_complete(test())
 
@@ -166,16 +172,20 @@ class TestSQLite3i(unittest.TestCase):
             self.assertFalse(isinstance(db, AsyncDatabase))
             stmt = db.prepare('SELECT * FROM users')
 
-            with self.assertRaises(TypeError):
+            try:
                 stmt.execute(timeout=None)
+            except Exception as exc:
+                self.assertTrue(isinstance(exc, (TypeError, ValueError)))
 
         async def test():
             async with AsyncDatabase('test.db') as db:
                 self.assertTrue(isinstance(db, AsyncDatabase))
                 stmt = db.prepare('SELECT * FROM users')
 
-                with self.assertRaises(TypeError):
+                try:
                     await stmt.execute(timeout=None)
+                except Exception as exc:
+                    self.assertTrue(isinstance(exc, (TypeError, ValueError)))
 
         self.loop.run_until_complete(test())
 

@@ -8,7 +8,7 @@ authors = [
     { name = 'nggit', email = 'contact@anggit.com' },
 ]
 description = 'An opinionated sqlite3 wrapper.'
-requires-python = '>=3.6'
+requires-python = '>=3.7'
 dependencies = [
     'awaiter',
 ]
