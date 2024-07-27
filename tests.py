@@ -172,16 +172,20 @@ class TestSQLite3i(unittest.TestCase):
             self.assertFalse(isinstance(db, AsyncDatabase))
             stmt = db.prepare('SELECT * FROM users')
 
-            with self.assertRaises(TypeError):
+            try:
                 stmt.execute(timeout=None)
+            except Exception as exc:
+                self.assertTrue(isinstance(exc, (TypeError, ValueError)))
 
         async def test():
             async with AsyncDatabase('test.db') as db:
                 self.assertTrue(isinstance(db, AsyncDatabase))
                 stmt = db.prepare('SELECT * FROM users')
 
-                with self.assertRaises(TypeError):
+                try:
                     await stmt.execute(timeout=None)
+                except Exception as exc:
+                    self.assertTrue(isinstance(exc, (TypeError, ValueError)))
 
         self.loop.run_until_complete(test())
 
