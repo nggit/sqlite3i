@@ -1,0 +1,2 @@
+graft sqlite3i
+global-exclude *.py[cod] __pycache__

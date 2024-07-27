@@ -1,0 +1,32 @@
+[build-system]
+requires = [ 'setuptools>=61.0', 'wheel' ]
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'sqlite3i'
+authors = [
+    { name = 'nggit', email = 'contact@anggit.com' },
+]
+description = 'An opinionated sqlite3 wrapper.'
+requires-python = '>=3.6'
+dependencies = [
+    'awaiter',
+]
+license = { text = 'MIT License' }
+classifiers = [
+    'Development Status :: 4 - Beta',
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: MIT License',
+    'Operating System :: OS Independent',
+    'Topic :: Software Development :: Libraries',
+]
+dynamic = [ 'version', 'readme' ]
+
+[project.urls]
+Homepage = 'https://github.com/nggit/sqlite3i'
+Source = 'https://github.com/nggit/sqlite3i'
+Funding = 'https://github.com/sponsors/nggit'
+
+[tool.setuptools.dynamic]
+version = { attr = 'sqlite3i.__version__' }
+readme = { file = 'README.md', content-type = 'text/markdown' }
