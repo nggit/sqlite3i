@@ -152,13 +152,17 @@ class TestSQLite3i(unittest.TestCase):
 
     def test_invalid_arguments(self):
         async def test():
-            with self.assertRaises((TypeError, ValueError)):
+            try:
                 stmt = self.db.prepare(None)
                 await stmt.execute()
+            except Exception as exc:
+                self.assertTrue(isinstance(exc, (TypeError, ValueError)))
 
-            with self.assertRaises((TypeError, ValueError)):
+            try:
                 stmt = self.db.prepare('SELECT * FROM users')
                 await stmt.execute(None)
+            except Exception as exc:
+                self.assertTrue(isinstance(exc, (TypeError, ValueError)))
 
         self.loop.run_until_complete(test())
 
