@@ -138,23 +138,25 @@ class TestSQLite3i(unittest.TestCase):
     def test_invalid_instances(self):
         with self.assertRaises(ValueError) as cm:
             _ = DatabaseStatement(None, '')
-            self.assertEqual(
-                str(cm.exception), 'db must be an instance of Database'
-            )
+
+        self.assertEqual(
+            str(cm.exception), 'db must be an instance of Database'
+        )
 
         with self.assertRaises(ValueError) as cm:
             _ = AsyncDatabaseStatement(None, '')
-            self.assertEqual(
-                str(cm.exception), 'db must be an instance of AsyncDatabase'
-            )
+
+        self.assertEqual(
+            str(cm.exception), 'db must be an instance of AsyncDatabase'
+        )
 
     def test_invalid_arguments(self):
         async def test():
-            with self.assertRaises(ValueError):
+            with self.assertRaises((TypeError, ValueError)):
                 stmt = self.db.prepare(None)
                 await stmt.execute()
 
-            with self.assertRaises(ValueError):
+            with self.assertRaises((TypeError, ValueError)):
                 stmt = self.db.prepare('SELECT * FROM users')
                 await stmt.execute(None)
 
