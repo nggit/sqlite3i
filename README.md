@@ -1,4 +1,8 @@
 # sqlite3i
+
+[![codecov](https://codecov.io/gh/nggit/sqlite3i/branch/main/graph/badge.svg?token=V6VAU8RNN0)](https://codecov.io/gh/nggit/sqlite3i)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nggit_sqlite3i&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=nggit_sqlite3i)
+
 An opinionated [sqlite3](https://docs.python.org/3/library/sqlite3.html) wrapper.
 
 The main goal of this package is simply to have `stmt.execute()` return `bool` instead of a cursor object.
